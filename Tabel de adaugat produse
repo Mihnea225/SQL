@@ -1,0 +1,25 @@
+#Acest cod creează un tabel și introduce trei produse în el.După ce tabelul și produsele sunt create, codul interoghează tabelul și afișează rezultatele.
+
+
+--Create the 'products' table
+CREATE TABLE products
+(
+    product_id INT PRIMARY KEY,
+    product_name VARCHAR(50) NOT NULL,
+    product_description TEXT,
+    price DECIMAL(10, 2) NOT NULL,
+    quantity INT NOT NULL,
+    created_at TIMESTAMP NOT NULL,
+    updated_at TIMESTAMP NOT NULL
+);
+
+--Insert some data into the 'products' table
+INSERT INTO products
+(product_id, product_name, product_description, price, quantity, created_at, updated_at)
+VALUES
+(1, 'Product A', 'This is Product A', 10.00, 50, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(2, 'Product B', 'This is Product B', 15.00, 30, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(3, 'Product C', 'This is Product C', 20.00, 10, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+
+--Query to fetch all data from the 'products' table
+SELECT * FROM products;
