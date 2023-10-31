@@ -1,0 +1,115 @@
+-- Create the Student Database
+CREATE DATABASE StudentDB;
+
+-- Use the Student Database
+USE StudentDB;
+
+-- Create Students Table
+CREATE TABLE Students (
+   StudentID INT PRIMARY KEY,
+   FirstName VARCHAR(50),
+   LastName VARCHAR(50),
+   ContactNumber VARCHAR(15),
+   AdmissionYear INT
+   -- Add other fields for addresses, performance, etc.
+);
+
+-- Create Courses Table
+CREATE TABLE Courses (
+   CourseID INT PRIMARY KEY,
+   CourseName VARCHAR(100),
+   Department VARCHAR(50)
+   -- Add other course-related fields.
+);
+
+-- Create Enrollments Table
+CREATE TABLE Enrollments (
+   EnrollmentID INT PRIMARY KEY,
+   StudentID INT,
+   CourseID INT,
+   EnrollDate DATE,
+   FOREIGN KEY (StudentID) REFERENCES Students(StudentID),
+   FOREIGN KEY (CourseID) REFERENCES Courses(CourseID)
+   -- Add more enrollment-related fields.
+);
+
+-- Create Attendance Table
+CREATE TABLE Attendance (
+   AttendanceID INT PRIMARY KEY,
+   StudentID INT,
+   Date DATE,
+   Status VARCHAR(10),
+   FOREIGN KEY (StudentID) REFERENCES Students(StudentID)
+   -- Add more attendance-related fields.
+);
+
+-- Create TestResults Table
+CREATE TABLE TestResults (
+   TestResultID INT PRIMARY KEY,
+   StudentID INT,
+   CourseID INT,
+   TestDate DATE,
+   Score INT,
+   FOREIGN KEY (StudentID) REFERENCES Students(StudentID),
+   FOREIGN KEY (CourseID) REFERENCES Courses(CourseID)
+   -- Add more test-related fields.
+);
+
+-- Create Addresses Table
+CREATE TABLE Addresses (
+   AddressID INT PRIMARY KEY,
+   StudentID INT,
+   Address VARCHAR(255),
+   City VARCHAR(50),
+   State VARCHAR(50),
+   ZipCode VARCHAR(10),
+   FOREIGN KEY (StudentID) REFERENCES Students(StudentID)
+   -- Add more address-related fields.
+);
+
+-- Create Scholarships Table
+CREATE TABLE Scholarships (
+   ScholarshipID INT PRIMARY KEY,
+   StudentID INT,
+   ScholarshipName VARCHAR(100),
+   Amount DECIMAL(10, 2),
+   FOREIGN KEY (StudentID) REFERENCES Students(StudentID)
+   -- Add more scholarship-related fields.
+);
+
+-- Create Fees Table
+CREATE TABLE Fees (
+   FeeID INT PRIMARY KEY,
+   StudentID INT,
+   FeeType VARCHAR(50),
+   Amount DECIMAL(10, 2),
+   DueDate DATE,
+   FOREIGN KEY (StudentID) REFERENCES Students(StudentID)
+   -- Add more fee-related fields.
+);
+
+-- Sample Data Insertion
+INSERT INTO Students (StudentID, FirstName, LastName, ContactNumber, AdmissionYear)
+VALUES (3, 'Marian', 'Stefan', '0770 000 000', 2022);
+INSERT INTO Courses (CourseID,CourseName,Department)
+values(3, 'math', 3)
+-- Repeat data insertion for other tables (Courses, Enrollments, Attendance, TestResults, Addresses, Scholarships, Fees).
+
+-- Implement SQL queries for various system functionalities and administrative procedures based on your requirements.
+
+-- Ensure proper data security, backup, and access control measures.
+
+-- Query to retrieve all student records
+SELECT * FROM Students;
+ 
+-- Query to retrieve all student records
+SELECT StudentID, FirstName, LastName, ContactNumber, AdmissionYear
+FROM Students;
+select CourseID,CourseName,Department
+from Courses
+
+-- Query to retrieve students who were present on a specific date
+SELECT s.FirstName, s.LastName, a.Date
+FROM Students s
+JOIN Attendance a ON s.StudentID = a.StudentID
+WHERE a.Status = 'Present' AND a.Date = '2023-10-31';
